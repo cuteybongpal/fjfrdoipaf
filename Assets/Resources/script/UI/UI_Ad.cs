@@ -1,0 +1,42 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UI_Ad : UI_Popup
+{
+    public GameObject UI_TreasureInventory;
+    public Transform Content;
+    public Text Total;
+    public Button Close;
+    void Start()
+    {
+        Init();
+        Close.onClick.AddListener(() =>
+        {
+            Hide();
+        });
+        Close.gameObject.SetActive(false);
+        StartCoroutine(ad());
+    }
+
+    IEnumerator ad()
+    {
+        int totalPrice = 0;
+        foreach (Treasure t in GameManager.Instance.Inventory)
+        {
+            if (t == null)
+                continue;
+            yield return new WaitForSeconds(.1f);
+            UI_InventoryTreasure ui = Instantiate(UI_TreasureInventory).GetComponent<UI_InventoryTreasure>();
+            ui.Init(t);
+            ui.gameObject.transform.SetParent(Content.transform);
+
+            totalPrice += t.Worth;
+            Total.text = $"{totalPrice}";
+        }
+        GameManager.Instance.CurrentMoney += totalPrice;
+        GameManager.Instance.InventoryClear();
+        Close.gameObject.SetActive(true);
+    }
+}
