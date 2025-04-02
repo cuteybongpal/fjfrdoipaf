@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public Vector3[] ReSpawnPos = new Vector3[5];
 
-    int currentMoney = 0;
+    int currentMoney = 10000;
     public int CurrentMoney
     {
         get { return currentMoney; }

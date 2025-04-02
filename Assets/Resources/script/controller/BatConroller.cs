@@ -47,7 +47,7 @@ public class BatConroller : MonoBehaviour
     {
         if (!other.CompareTag("Attack"))
             return;
-        CurrentHp--;
+        CurrentHp-= GameManager.Instance.PlayerAttack;
         particle.Play();
     }
 }
