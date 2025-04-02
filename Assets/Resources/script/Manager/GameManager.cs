@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public float PlayerSpeed;
     float OriginalPlayerSpeed;
     public int PlayerAttack;
+    public int Score = 1000;
+
+    public Vector3[] ReSpawnPos = new Vector3[5];
 
     int currentMoney = 0;
     public int CurrentMoney
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     public bool Clear = false;
     public GameObject UI_GameOver;
     public Func<PlayerController> GetPlayer;
+    public bool[] isPuzzleCleared = new bool[5];
 
     public GameObject UI_Warning;
     public Define.Scenes CurrentScene
@@ -48,13 +52,23 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1f;
             if (value == Define.Scenes.Stage1 && currentScene == Define.Scenes.Lobby)
+            {
+                ReSpawnPos[0] = Vector3.zero;
                 GameStart();
+            }
             else if (value == Define.Scenes.Lobby && CurrentScene == Define.Scenes.Stage1)
                 GameClear();
-            else if ((int)value > (int)Define.Scenes.Stage1 && (int)currentScene > (int)value && !Clear)
+            else if ((int)value >= (int)Define.Scenes.Stage1 && (int)currentScene < (int)value && !Clear)
+            {
                 StageClear();
+            }
+            if ((int)value < (int)CurrentScene && (int)currentScene >= (int)Define.Scenes.Stage1)
+            {
+                ReSpawnPos[CurrentStage] = Vector3.zero;
+            }
 
             currentScene = value;
+            Debug.Log("daa");
             SceneManager.LoadSceneAsync((int)currentScene);
         }
     }
@@ -145,6 +159,8 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
+        PlayerCurrentHp = 0;
+        PlayerCurrentO2 = 0;
         Instantiate(UI_GameOver).GetComponent<UI_GameOver>().Init();
         for (int i = Inventory.Count - 1; i > 0; i-- )
         {
@@ -165,6 +181,7 @@ public class GameManager : MonoBehaviour
             }
             index++;
         }
+        Score -= 100;
         Inventory = new List<IStorable>();
         Time.timeScale = 0f;
     }
@@ -184,6 +201,8 @@ public class GameManager : MonoBehaviour
     }
     public void GameClear()
     {
+        PlayerCurrentHp = 0;
+        PlayerCurrentO2 = 0;
         DataManager.Instance.IsStageTreasureFind = new List<bool>[5];
         for (int i = 0; i < IsStageTreasureFind.Length; i++)
         {
@@ -200,7 +219,10 @@ public class GameManager : MonoBehaviour
             isAllFind &= DataManager.Instance.IsStageTreasureFind[i][0];
         }
         if (isAllFind)
+        {
             Clear = true;
+            DataManager.Instance.Add(Score);
+        }
         PlayerSpeed = OriginalPlayerSpeed;
     }
     public void StageClear()
@@ -226,5 +248,13 @@ public class GameManager : MonoBehaviour
             }
         }
         Inventory = new List<IStorable>();
+    }
+
+    public void ResetManager()
+    {
+        GameObject go = new GameObject() { name = "GameManager" };
+        GameManager manager = go.AddComponent<GameManager>();
+        instance = null;
+        Destroy(gameObject);
     }
 }

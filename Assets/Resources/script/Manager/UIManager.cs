@@ -36,4 +36,9 @@ public class UIManager : MonoBehaviour
     {
         return currentMainUI as T;
     }
+    public T GetCurrentPopup<T>() where T : UI_Popup
+    {
+        UI_Popup ui = ui_Popups.Peek();
+        return ui as T;
+    }
 }

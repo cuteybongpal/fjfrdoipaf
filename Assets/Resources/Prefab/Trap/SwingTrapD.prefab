@@ -91,6 +91,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3fdf367fd9689e541bcb0b609de6af67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3665041463364335745}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3fdf367fd9689e541bcb0b609de6af67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1255527010524347481}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3fdf367fd9689e541bcb0b609de6af67, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6649100607761186105}
     - targetCorrespondingSourceObject: {fileID: -1528205592251162229, guid: 3fdf367fd9689e541bcb0b609de6af67, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4059061829520000830}
@@ -148,3 +154,45 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &1255527010524347481
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878691444695260909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.67, y: 4.53, z: 0.67}
+  m_Center: {x: 1.91, y: 0, z: 0}
+--- !u!65 &6649100607761186105
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7878691444695260909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.67, y: 4.53, z: 0.67}
+  m_Center: {x: -1.99, y: 0, z: 0}

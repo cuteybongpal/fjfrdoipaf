@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class UI_Ad : UI_Popup
@@ -31,7 +32,7 @@ public class UI_Ad : UI_Popup
             UI_InventoryTreasure ui = Instantiate(UI_TreasureInventory).GetComponent<UI_InventoryTreasure>();
             ui.Init(t);
             ui.gameObject.transform.SetParent(Content.transform);
-
+            GameManager.Instance.Score += 10;
             totalPrice += t.Worth;
             Total.text = $"{totalPrice}";
         }

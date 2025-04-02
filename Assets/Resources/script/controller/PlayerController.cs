@@ -41,10 +41,15 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Animator anim;
     public int MaxHp;
-    int currentHp;
+    public int currentHp;
     int currentO2;
     public Collider AttackCollider;
     public float AttackCoolDown = 1;
+    public bool Invincible = false;
+    public bool Invisible = false;
+    bool canAttack = true;
+    public ParticleSystem particle;
+    public AudioSource[] audioSources;
     public int CurrentHp
     {
         get { return currentHp; }
@@ -54,6 +59,10 @@ public class PlayerController : MonoBehaviour
             var ui = UIManager.Instance.GetMainUI<UI_Player>();
             if (ui == null)
                 return;
+            if ( currentHp > MaxHp)
+            {
+                currentHp = MaxHp;
+            }
             if (currentHp <= 0)
             {
                 GameManager.Instance.GameOver();
@@ -95,6 +104,12 @@ public class PlayerController : MonoBehaviour
             CurrentHp = MaxHp;
             CurrentO2 = GameManager.Instance.MaxPlayerO2;
         }
+        //Debug.Log(GameManager.Instance.ReSpawnPos[GameManager.Instance.CurrentStage]);
+        if (GameManager.Instance.CurrentStage >= 0)
+            if (GameManager.Instance.ReSpawnPos[GameManager.Instance.CurrentStage] != null && GameManager.Instance.ReSpawnPos[GameManager.Instance.CurrentStage] != Vector3.zero)
+            {
+                transform.position = GameManager.Instance.ReSpawnPos[GameManager.Instance.CurrentStage];
+            }
         StartCoroutine(ReduceO2());
         GameManager.Instance.GetPlayer = null;
         GameManager.Instance.GetPlayer = GetPlayer;
@@ -160,10 +175,13 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Trap"))
+        if (other.CompareTag("Trap") || other.CompareTag("Monster"))
         {
+            if (Invincible)
+                return;
             CurrentHp--;
-            Debug.Log("데미지 입음");
+            audioSources[1].Play();
+            particle.Play();
         }
     }
     private void OnTriggerExit(Collider other)
@@ -183,11 +201,17 @@ public class PlayerController : MonoBehaviour
     }
     void S_Attack()
     {
-        anim.Play("Attack");
+        if (canAttack)
+        {
+            anim.Play("Attack");
+            StartCoroutine(AtkCoolDown());
+            audioSources[3].Play();
+        }
     }
     void S_Jump()
     {
         anim.Play("Jump");
+        audioSources[2].Play();
     }
 
     void AttackCollisionOn()
@@ -208,9 +232,19 @@ public class PlayerController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
+    IEnumerator AtkCoolDown()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(AttackCoolDown);
+        canAttack = true;
+    }
     public PlayerController GetPlayer()
     {
         return this;
     }
 
+    void FootStep()
+    {
+        audioSources[0].Play();
+    }
 }
