@@ -10,6 +10,7 @@ public class UI_Credit : UI_Base
     void Start()
     {
         ScoreText.text += GameManager.Instance.Score;
+        DataManager.Instance.Add(GameManager.Instance.Score);
         StartCoroutine(CreditDown());
     }
     IEnumerator CreditDown()

@@ -47,7 +47,10 @@ public class DataManager
     public void Add(int score)
     {
         Ranking.Add(score);
-
+        foreach( var item in Ranking)
+        {
+            Debug.Log(item);
+        }
         XmlSerializer serializer = new XmlSerializer(typeof(List<int>));
 #if UNITY_EDITOR
         using (StreamWriter streamWriter = new StreamWriter("Assets/Resources/Data/ranking.xml"))
@@ -56,7 +59,7 @@ public class DataManager
         }
         return;
 #endif
-        using (StreamWriter streamWriter = new StreamWriter(Application.streamingAssetsPath + "Data/ranking.xml"))
+        using (StreamWriter streamWriter = new StreamWriter(Application.streamingAssetsPath + "/Data/ranking.xml"))
         {
             serializer.Serialize(streamWriter, Ranking);
         }
@@ -84,7 +87,7 @@ public class DataManager
         Debug.Log(Application.streamingAssetsPath);
         try
         {
-            using (StreamReader reader = new StreamReader(Application.streamingAssetsPath + "Data/ranking.xml"))
+            using (StreamReader reader = new StreamReader(Application.streamingAssetsPath + "/Data/ranking.xml"))
             {
                 Ranking = (List<int>)serializer.Deserialize(reader);
             }

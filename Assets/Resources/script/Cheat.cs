@@ -5,10 +5,18 @@ using UnityEngine;
 public class Cheat : MonoBehaviour
 {
     bool isPause = false;
+    static bool isExist = false;
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        if (!isExist)
+        {
+            DontDestroyOnLoad(gameObject);
+            isExist = true;
+        }
+        else
+            Destroy(gameObject);
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
@@ -24,6 +32,10 @@ public class Cheat : MonoBehaviour
             {
                 ProductManager.Instance.ProductCost[i] = 0;
             }
+            UI_Shop ui = UIManager.Instance.GetCurrentPopup<UI_Shop>();
+            if (ui == null)
+                return;
+            ui.Refresh();
         }
 
         if (Input.GetKeyDown(KeyCode.F3))

@@ -273,8 +273,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1.1913509}
-  m_Center: {x: 0, y: 0, z: 0.7545582}
+  m_Size: {x: 1, y: 1, z: 1.2824774}
+  m_Center: {x: 0, y: 0, z: 0.8001214}
 --- !u!1 &6913516955133738084 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 40ea860487a33464787b67368ca39eec, type: 3}
@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHp: 3
+  currentHp: 0
   AttackCollider: {fileID: 4845176149577583592}
   AttackCoolDown: 0
   Invincible: 0

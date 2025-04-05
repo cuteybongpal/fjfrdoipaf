@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
     public Vector3[] ReSpawnPos = new Vector3[5];
 
-    int currentMoney = 10000;
+    int currentMoney = 0;
     public int CurrentMoney
     {
         get { return currentMoney; }
@@ -62,13 +62,12 @@ public class GameManager : MonoBehaviour
             {
                 StageClear();
             }
-            if ((int)value < (int)CurrentScene && (int)currentScene >= (int)Define.Scenes.Stage1)
+            if ((int)value < (int)CurrentScene && (int)currentScene >= (int)Define.Scenes.Stage1 && (int)currentScene < (int)Define.Scenes.EndCredit)
             {
                 ReSpawnPos[CurrentStage] = Vector3.zero;
             }
 
             currentScene = value;
-            Debug.Log("daa");
             SceneManager.LoadSceneAsync((int)currentScene);
         }
     }
@@ -211,17 +210,6 @@ public class GameManager : MonoBehaviour
             {
                 DataManager.Instance.IsStageTreasureFind[i].Add(IsStageTreasureFind[i][j]);
             }
-        }
-        bool isAllFind = true;
-
-        for (int i = 0; i < DataManager.Instance.IsStageTreasureFind.Length; i++)
-        {
-            isAllFind &= DataManager.Instance.IsStageTreasureFind[i][0];
-        }
-        if (isAllFind)
-        {
-            Clear = true;
-            DataManager.Instance.Add(Score);
         }
         PlayerSpeed = OriginalPlayerSpeed;
     }

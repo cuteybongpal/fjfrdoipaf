@@ -26,7 +26,7 @@ public class UI_Lobby : UI_Base
         });
         ToMenu.onClick.AddListener(() =>
         {
-            
+            Instantiate(ConfirmSceneChange).GetComponent<UI_ConfirmSceneChange>().Init("시작화면으로 돌아가시겠습니까?", Define.Scenes.StartScene);
         });
     }
     public void SetMoney(int money)
